@@ -1,0 +1,42 @@
+RewriteEngine On
+Options +FollowSymlinks
+RewriteCond %{HTTP_ACCEPT} !application/rdf\+xml.*(text/html|application/xhtml\+xml)
+RewriteCond %{HTTP_ACCEPT} text/html [OR]
+RewriteCond %{HTTP_ACCEPT} application/xhtml\+xml
+RewriteRule ^resource/(.+) http://libver.math.auth.gr/page/$1 [R=303]
+
+RewriteRule ^page/(.+) /sembrowser/browser.php?uri=http://libver.math.auth.gr/resource/$1
+
+RewriteCond %{HTTP_ACCEPT} application/rdf\+xml
+RewriteRule ^resource/(.+) http://libver.math.auth.gr/data/$1 [R=303]
+
+RewriteCond %{HTTP_ACCEPT} text/n3
+RewriteRule ^resource/(.+) http://libver.math.auth.gr/data/$1\.n3 [R=303]
+
+RewriteCond %{HTTP_ACCEPT} application/json
+RewriteRule ^resource/(.+) http://libver.math.auth.gr/data/$1\.json [R=303]
+
+RewriteCond %{HTTP_ACCEPT} text/csv
+RewriteRule ^resource/(.+) http://libver.math.auth.gr/data/$1\.csv [R=303]
+
+RewriteCond %{HTTP_ACCEPT} application/atom+xml
+RewriteRule ^resource/(.+) http://libver.math.auth.gr/data/$1\.atom [R=303]
+
+RewriteCond %{HTTP_ACCEPT} text/plain
+RewriteRule ^resource/(.+) http://libver.math.auth.gr/data/$1\.ntriples [R=303]
+
+RewriteRule ^resource/(.+) http://libver.math.auth.gr/data/$1\.n3 [R=303]
+
+RewriteRule ^data/(.+)\.rdf http://libver.math.auth.gr:8890/sparql?query=DESCRIBE+<http://libver.math.auth.gr/resource/$1>&output=rdf [R=303]
+
+RewriteRule ^data/(.+)\.n3 http://libver.math.auth.gr:8890/sparql?query=DESCRIBE+<http://libver.math.auth.gr/resource/$1>&output=n3 [R=303]
+
+RewriteRule ^data/(.+)\.json http://libver.math.auth.gr:8890/sparql?query=DESCRIBE+<http://libver.math.auth.gr/resource/$1>&output=json [R=303]
+
+RewriteRule ^data/(.+)\.csv http://libver.math.auth.gr:8890/sparql?query=DESCRIBE+<http://libver.math.auth.gr/resource/$1>&output=csv [R=303]
+
+RewriteRule ^data/(.+)\.atom http://libver.math.auth.gr:8890/sparql?query=DESCRIBE+<http://libver.math.auth.gr/resource/$1>&output=atom [R=303]
+
+RewriteRule ^data/(.+)\.ntriples http://libver.math.auth.gr:8890/sparql?query=DESCRIBE+<http://libver.math.auth.gr/resource/$1>&output=n3 [R=303]
+
+RewriteRule ^data/(.+) http://libver.math.auth.gr:8890/sparql?query=DESCRIBE+<http://libver.math.auth.gr/resource/$1>&output=n3 [R=303]
